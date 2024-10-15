@@ -23,26 +23,42 @@ const gameOverPopup = document.getElementById("gameOverPopup");
 const finalScore = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
-// Gradien untuk ular
-function createSnakeGradient() {
+// Gradien untuk badan ular
+function createSnakeBodyGradient() {
   let gradient = ctx.createLinearGradient(0, 0, gridSize, gridSize);
   gradient.addColorStop(0, "#6a994e");
   gradient.addColorStop(1, "#a7c957");
   return gradient;
 }
 
-// Menggambar ular dengan bentuk bulat
+// Warna khusus untuk kepala ular
+let headColor = "#ff6347"; // Warna merah-oranye untuk kepala
+
+// Menggambar ular dengan bentuk bulat dan kepala berbeda
 function drawSnake() {
-  snake.forEach((part) => {
+  snake.forEach((part, index) => {
     ctx.beginPath();
-    ctx.arc(
-      part.x * gridSize + gridSize / 2,
-      part.y * gridSize + gridSize / 2,
-      gridSize / 2.5,
-      0,
-      Math.PI * 2
-    );
-    ctx.fillStyle = createSnakeGradient();
+    if (index === 0) {
+      // Kepala ular
+      ctx.arc(
+        part.x * gridSize + gridSize / 2,
+        part.y * gridSize + gridSize / 2,
+        gridSize / 2,
+        0,
+        Math.PI * 2
+      );
+      ctx.fillStyle = headColor; // Warna khusus untuk kepala
+    } else {
+      // Badan ular
+      ctx.arc(
+        part.x * gridSize + gridSize / 2,
+        part.y * gridSize + gridSize / 2,
+        gridSize / 2.5,
+        0,
+        Math.PI * 2
+      );
+      ctx.fillStyle = createSnakeBodyGradient(); // Gradien untuk badan
+    }
     ctx.fill();
     ctx.closePath();
   });
