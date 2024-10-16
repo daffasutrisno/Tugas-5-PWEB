@@ -8,22 +8,20 @@ let direction = { x: 1, y: 0 };
 let food = [];
 let score = 0;
 let gameInterval;
-let gridSize = 20; // Ukuran grid
-let gameStarted = false; // Menandai apakah game sudah dimulai atau belum
+let gridSize = 20; 
+let gameStarted = false;
 
-// Pengaturan Kecepatan Ular dan Jumlah Makanan
-let snakeSpeed = 150; // Kecepatan ular
-let foodCount = 5; // Jumlah makanan yang muncul
 
-// Warna Tetap untuk Makanan
+let snakeSpeed = 150; 
+let foodCount = 5;
+
 let foodColor = "red";
 
-// Referensi Pop-up Game Over
+
 const gameOverPopup = document.getElementById("gameOverPopup");
 const finalScore = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
-// Gradien untuk badan ular
 function createSnakeBodyGradient() {
   let gradient = ctx.createLinearGradient(0, 0, gridSize, gridSize);
   gradient.addColorStop(0, "#6a994e");
@@ -31,15 +29,13 @@ function createSnakeBodyGradient() {
   return gradient;
 }
 
-// Warna khusus untuk kepala ular
-let headColor = "#ff6347"; // Warna merah-oranye untuk kepala
+let headColor = "#ff6347"; 
 
-// Menggambar ular dengan bentuk bulat dan kepala berbeda
 function drawSnake() {
   snake.forEach((part, index) => {
     ctx.beginPath();
     if (index === 0) {
-      // Kepala ular
+
       ctx.arc(
         part.x * gridSize + gridSize / 2,
         part.y * gridSize + gridSize / 2,
@@ -47,9 +43,9 @@ function drawSnake() {
         0,
         Math.PI * 2
       );
-      ctx.fillStyle = headColor; // Warna khusus untuk kepala
+      ctx.fillStyle = headColor; 
     } else {
-      // Badan ular
+     
       ctx.arc(
         part.x * gridSize + gridSize / 2,
         part.y * gridSize + gridSize / 2,
@@ -57,14 +53,13 @@ function drawSnake() {
         0,
         Math.PI * 2
       );
-      ctx.fillStyle = createSnakeBodyGradient(); // Gradien untuk badan
+      ctx.fillStyle = createSnakeBodyGradient(); 
     }
     ctx.fill();
     ctx.closePath();
   });
 }
 
-// Menggambar makanan dengan bentuk bulat
 function drawFood() {
   food.forEach((f) => {
     ctx.beginPath();
@@ -81,11 +76,9 @@ function drawFood() {
   });
 }
 
-// Memindahkan ular
 function moveSnake() {
   const newHead = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-  // Cek tabrakan dengan dinding atau dirinya sendiri
   if (
     newHead.x < 0 ||
     newHead.x >= canvas.width / gridSize ||
@@ -94,20 +87,19 @@ function moveSnake() {
     snake.some((part) => part.x === newHead.x && part.y === newHead.y)
   ) {
     clearInterval(gameInterval);
-    showGameOverPopup(); // Menampilkan pop-up saat game berakhir
+    showGameOverPopup(); 
     return;
   }
 
   snake.unshift(newHead);
 
-  // Cek apakah ular memakan makanan
   let ateFood = false;
   food.forEach((f, index) => {
     if (newHead.x === f.x && newHead.y === f.y) {
       score++;
       document.getElementById("score").innerText = "Skor: " + score;
       food.splice(index, 1);
-      spawnFood(); // Spawn makanan baru
+      spawnFood();
       ateFood = true;
     }
   });
@@ -117,7 +109,6 @@ function moveSnake() {
   }
 }
 
-// Menyebarkan makanan secara acak
 function spawnFood() {
   while (food.length < foodCount) {
     const newFood = {
@@ -125,21 +116,18 @@ function spawnFood() {
       y: Math.floor(Math.random() * (canvas.height / gridSize)),
     };
 
-    // Pastikan makanan tidak muncul di atas ular
     if (!snake.some((part) => part.x === newFood.x && part.y === newFood.y)) {
       food.push(newFood);
     }
   }
 }
 
-// Menggambar permainan
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawSnake();
   drawFood();
 }
 
-// Mengatur arah ular
 document.addEventListener("keydown", (event) => {
   if (!gameStarted && event.code === "Space") {
     startGame();
@@ -161,26 +149,22 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Menampilkan pop-up Game Over
 function showGameOverPopup() {
   finalScore.innerText = "Skor Akhir: " + score;
   gameOverPopup.style.display = "block";
 }
 
-// Memulai ulang game
 restartBtn.addEventListener("click", () => {
   gameOverPopup.style.display = "none";
   resetGame();
 });
 
-// Fungsi untuk memulai permainan
 function startGame() {
   gameStarted = true;
   spawnFood();
   gameInterval = setInterval(gameLoop, snakeSpeed);
 }
 
-// Fungsi untuk mereset permainan
 function resetGame() {
   score = 0;
   document.getElementById("score").innerText = "Skor: " + score;
@@ -189,10 +173,9 @@ function resetGame() {
   food = [];
   gameStarted = false;
   clearInterval(gameInterval);
-  draw(); // Gambar ulang permainan tanpa pergerakan
+  draw();
 }
 
-// Loop game
 function gameLoop() {
   moveSnake();
   draw();
