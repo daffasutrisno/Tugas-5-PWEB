@@ -21,7 +21,7 @@ const finalScore = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
 const biteSound = new Audio('assets/audio/bite.Mp3');
-const backgroundMusic = new Audio('assets/audio/background.mp3');
+const backgroundMusic = new Audio('assets/audio/background.Mp3');
 const loseSound = new Audio('assets/audio/lose.mp3');
 
 backgroundMusic.loop = true; // Loop background music
