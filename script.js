@@ -181,5 +181,4 @@ function gameLoop() {
   draw();
 }
 
-// Memulai permainan tanpa pergerakan (diam saja)
 resetGame();
