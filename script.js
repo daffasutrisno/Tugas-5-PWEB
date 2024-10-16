@@ -20,9 +20,9 @@ const gameOverPopup = document.getElementById("gameOverPopup");
 const finalScore = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
-const biteSound = new Audio('bite.mp3');
-const backgroundMusic = new Audio('background.mp3');
-const loseSound = new Audio('lose.mp3');
+const biteSound = new Audio('bite.Mp3');
+const backgroundMusic = new Audio('background.Mp3');
+const loseSound = new Audio('lose.Mp3');
 
 backgroundMusic.loop = true; // Loop background music
 
